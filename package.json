@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/skeown13/asyncJS_p/issues"
   },
-  "homepage": "https://github.com/skeown13/asyncJS_p#readme"
+  "homepage": "https://github.com/skeown13/asyncJS_p#readme",
+  "dependencies": {
+    "superagent": "^5.3.1"
+  }
 }
