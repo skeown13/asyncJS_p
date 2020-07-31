@@ -13,20 +13,30 @@ const readFilePro = (file) => {
   })
 }
 
-readFilePro(`${__dirname}/dog.txt`).then((result) => {
-  console.log(`Breed: ${result}`)
-
-  superagent
-    .get(`https://dog.ceo/api/breed/${result}/images/random`)
-    .then((res) => {
-      console.log(res.body.message)
-
-      fs.writeFile("dog-img.txt", res.body.message, (err) => {
-        if (err) return console.log(err.message)
-        console.log("Random dog image saved to file!")
-      })
+const writeFilePro = (file, data) => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(file, data, (err) => {
+      if (err) reject("Could not write file")
+      resolve("Success")
     })
-    .catch((err) => {
-      if (err) return console.log(err.message)
-    })
-})
+  })
+}
+
+readFilePro(`${__dirname}/dog.txt`)
+  .then((result) => {
+    console.log(`Breed: ${result}`)
+
+    return superagent.get(`https://dog.ceo/api/breed/${result}/images/random`)
+  })
+  // res is the result that is returned from the previous handler
+  .then((res) => {
+    console.log(res.body.message)
+
+    return writeFilePro("dog-img.txt", res.body.message)
+  })
+  .then(() => {
+    console.log("Random dog image saved to file!")
+  })
+  .catch((err) => {
+    console.log(err)
+  })
