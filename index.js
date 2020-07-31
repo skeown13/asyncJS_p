@@ -13,11 +13,11 @@ const readFilePro = (file) => {
   })
 }
 
-fs.readFile(`${__dirname}/dog.txt`, (err, data) => {
-  console.log(`Breed: ${data}`)
+readFilePro(`${__dirname}/dog.txt`).then((result) => {
+  console.log(`Breed: ${result}`)
 
   superagent
-    .get(`https://dog.ceo/api/breed/${data}/images/random`)
+    .get(`https://dog.ceo/api/breed/${result}/images/random`)
     .then((res) => {
       console.log(res.body.message)
 
